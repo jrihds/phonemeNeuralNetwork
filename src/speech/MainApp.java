@@ -9,25 +9,23 @@ import javax.swing.Timer;
 
 public class MainApp {
 	
-	public int onscreenBins = 128;
+	public int frequencySpectrum = 128;
 	public int fftSize = 1024;
-	public int phonemes = 6;
+	public int numberOfPhonemes = 6;
 	
-	public double spectrum[] = new double[fftSize];
-	public double outputSort[] = new double[phonemes];
-	public double magnLog[];
-	public double smoothed[];
-	public double outputs[];
-	public double vocalTract[][][];
-	public double lipsInner[][][];
-	public double lipsOuter[][][];
+	public double neuralNetworkOutputs[];
+	public double vocalTractContour[][][];
+	public double innerLipContour[][][];
+	public double outerLipsContour[][][];
+	public double strongestPhoneme;
+	public double amplitude;
+	public String phonemeText;
 	
-	MakeFrames frames;
-	ReadImage ri;
+	MakeFrames mainApplicationWindow;
 	Timer timer;
-	NeuralNetClient client;
+	NeuralNetClient neuralNetwork;
 	
-	public boolean isApplet = false; 			// hack hack hack ... eeeek
+	public boolean isApplet = false;
 	
 	public static void main(String args[]) throws Exception {
 		MainApp app = new MainApp(false);
@@ -36,43 +34,45 @@ public class MainApp {
 	
 	MainApp(boolean isApplet) {
 		
-		frames = new MakeFrames(isApplet, phonemes, onscreenBins); 		// Create gfx for output
+		mainApplicationWindow = new MakeFrames(isApplet, numberOfPhonemes, frequencySpectrum); 	
+		mainApplicationWindow.makeMaster();
 		
-		final ReadImage ri = new ReadImage();
+		ReadImage readImage = new ReadImage();
 		try {
-			vocalTract = ri.readTract(); 			// Read in data from images
-			lipsInner = ri.readLips1(); 			// of lip and tract shapes
-			lipsOuter = ri.readLips2();
+			vocalTractContour = readImage.readTract(); 				// Read in data from images of lip
+			innerLipContour = readImage.readLips1(); 					//		and vocal tract shapes
+			outerLipsContour = readImage.readLips2();					// 		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		frames.makeMaster();
-		
-		timer = new Timer(40, new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
+		timer = new Timer(40, new ActionListener() {					// Create a timer object that runs at 25 frames 
+																		//		per second, i.e. every 40ms
+			public void actionPerformed(ActionEvent ae) {				//
 				
-				outputs = client.outputs;
+				neuralNetworkOutputs = neuralNetwork.getNeuralNetworkOutputs();
+				strongestPhoneme = neuralNetwork.getMaxPhonemeValue();
 				
-				for (int i = 0; i < outputs.length; i++) {
-					outputSort[i] = outputs[i];
-				}
-				Arrays.sort(outputSort);
-				
-				String text = "";
-				if (outputSort[5] > 0.3) {
-					if (outputSort[5] == outputs[0]) {text = "EEE";}
-					if (outputSort[5] == outputs[1]) {text = "EHH";}
-					if (outputSort[5] == outputs[2]) {text = "ERR";}
-					if (outputSort[5] == outputs[3]) {text = "AHH";}
-					if (outputSort[5] == outputs[4]) {text = "OOH";}
-					if (outputSort[5] == outputs[5]) {text = "UHH";}
+				phonemeText = "";
+				amplitude = 0.3;
+				if (strongestPhoneme > amplitude) {
+					if (strongestPhoneme == neuralNetworkOutputs[0]) {phonemeText = "EEE";}
+					if (strongestPhoneme == neuralNetworkOutputs[1]) {phonemeText = "EHH";}
+					if (strongestPhoneme == neuralNetworkOutputs[2]) {phonemeText = "ERR";}
+					if (strongestPhoneme == neuralNetworkOutputs[3]) {phonemeText = "AHH";}
+					if (strongestPhoneme == neuralNetworkOutputs[4]) {phonemeText = "OOH";}
+					if (strongestPhoneme == neuralNetworkOutputs[5]) {phonemeText = "UHH";}
 				}
 				
-				frames.updateGfx(vocalTract, text, lipsInner, lipsOuter, outputs, client.smoothed);
+				mainApplicationWindow.updateGfx(
+						vocalTractContour,
+						phonemeText,
+						innerLipContour,
+						outerLipsContour,
+						neuralNetworkOutputs,
+						neuralNetwork.getSmoothedFrequencySpectrum());
 			}
 		});
-		
 	}
 	
 	void start() throws InterruptedException {
@@ -83,20 +83,14 @@ public class MainApp {
 		RealTimeSpectralSource rtSource = new RealTimeSpectralSource(
 				spectralAnalysis);
 		
-		client = new NeuralNetClient(fftSize, onscreenBins,frames.drawScroll);
+		neuralNetwork = new NeuralNetClient(fftSize, frequencySpectrum, mainApplicationWindow.drawScroll);
 		
 		// Setup input from soundcard
-		String inName = null;
-		String outName = null;
-		if (inName == null) {
-			inName = "default [default]";
-		}
-		if (outName == null) {
-			outName = "default [default]";
-		}
+		String inName = "default [default]";
+		String outName = "default [default]";
 		
 		try {
-			rtSource.startAudio(inName, outName, onscreenBins, client);
+			rtSource.startAudio(inName, outName, frequencySpectrum, neuralNetwork);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

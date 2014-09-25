@@ -13,7 +13,7 @@ public class NeuralNetClient {
 	SpectrumAdjust specAdj;
 	SpectralAnalysisProcess sprectralAnalysis;
 	DrawScrollingSpect scrollingSpect;
-	double outputs[];
+	private double outputs[];
 	double smoothed[];
 	double magnLog[];
 	int fftSize;
@@ -43,20 +43,11 @@ public class NeuralNetClient {
 		
 	}
 
-//	List<Client> clients;
-//	
-//	void addClient(Client c){
-//		cleints.add(c);
-//	}
-//	
 	public void process(double[] spectrum) {
 		
 		magnLog = specAdj.linearLog(onscreenBins, fftSize, spectrum);
 		
 		smoothed = specAdj.running3Average(onscreenBins, magnLog);
-//		for(Client client:clients){
-//			client.process(smoothed);
-//		}
 		
 		for (int i=0; i<smoothed.length; i++) {
 			smoothed[i]*=2;									// This is adding volume to the input signal.
@@ -64,7 +55,22 @@ public class NeuralNetClient {
 		
 		if (scrollingSpect != null) scrollingSpect.notifyMoreDataReady(magnLog);
 		outputs = neuralNet.forwardPass(smoothed);
-
+	}
+	
+	public double[] getNeuralNetworkOutputs() {
+		return outputs;
+	}
+	
+	public double[] getSmoothedFrequencySpectrum() {
+		return smoothed;
+	}
+	
+	public double getMaxPhonemeValue() {
+		double max = 0;
+		for (int i = 0; i < outputs.length; i ++) {
+			if (outputs[i] > max) { max = outputs[i]; }
+		}
+		return max;
 	}
 	
 }
