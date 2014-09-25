@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Speech configuration</comment>
+<entry key="sampleRate">44100</entry>
+<entry key="input">M1010LT [plughw:0,0]</entry>
+<entry key="output">M1010LT [plughw:0,0]</entry>
+<entry key="channel">0</entry>
+</properties>
