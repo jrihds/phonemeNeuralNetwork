@@ -1,4 +1,4 @@
-package speech;
+package speech.FrontendGfx;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 // addComponent function from http://www.java-forums.org/
 
 public class MakeFrames {
@@ -27,7 +28,7 @@ public class MakeFrames {
 	DrawLips drawTargLips;
 	AnalyserPanel meterPanel;
 	DrawGraph drawGraph;
-	DrawScrollingSpect drawScroll;
+	public DrawScrollingSpect drawScroll;
 	DrawHist drawHist;
 
 	private JFrame masterFrame;

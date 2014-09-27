@@ -7,6 +7,11 @@ import java.util.Arrays;
 
 import javax.swing.Timer;
 
+import speech.AudioProcessing.RealTimeSpectralSource;
+import speech.AudioProcessing.SpectralAnalysisProcess;
+import speech.DataAcquisition.ReadImage;
+import speech.FrontendGfx.MakeFrames;
+
 public class MainApp {
 	
 	public int frequencySpectrum = 128;

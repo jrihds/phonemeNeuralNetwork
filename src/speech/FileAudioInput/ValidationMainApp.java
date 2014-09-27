@@ -1,4 +1,4 @@
-package speech;
+package speech.FileAudioInput;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +9,12 @@ import java.io.ObjectInputStream;
 import java.util.Arrays;
 
 import javax.swing.Timer;
+
+import speech.NeuralNet;
+import speech.NeuralNetClient;
+import speech.AudioProcessing.SpectrumAdjust;
+import speech.DataAcquisition.ReadImage;
+import speech.FrontendGfx.MakeFrames;
 
 public class ValidationMainApp {
 	

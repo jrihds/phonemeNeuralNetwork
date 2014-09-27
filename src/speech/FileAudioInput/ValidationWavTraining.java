@@ -1,8 +1,10 @@
-package speech;
+package speech.FileAudioInput;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
+import speech.NeuralNet;
+import speech.AudioProcessing.SpectrumAdjust;
 import uk.ac.bath.ai.backprop.BackProp;
 
 //

@@ -1,7 +1,8 @@
-package speech;
+package speech.AudioProcessing;
 
 import java.util.List;
 
+import speech.NeuralNetClient;
 import uk.org.toot.audio.core.AudioBuffer;
 import uk.org.toot.audio.server.AudioClient;
 import uk.org.toot.audio.server.IOAudioProcess;

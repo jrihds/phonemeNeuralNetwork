@@ -1,4 +1,4 @@
-package speech;
+package speech.DataAcquisition;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

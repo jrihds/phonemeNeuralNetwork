@@ -1,4 +1,4 @@
-package speech;
+package speech.FrontendGfx;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class DrawLips extends JPanel {
 		this.phonemes = phonemes;
 		
 		try{
-			img = ImageIO.read(new File("src/speech/imagefiles/face.bmp"));
+			img = ImageIO.read(new File("src/speech/DataAcquisition/imagefiles/face.bmp"));
 		} catch (IOException e) {}
 	}
 

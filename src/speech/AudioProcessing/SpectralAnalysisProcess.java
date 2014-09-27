@@ -1,5 +1,6 @@
-package speech;
+package speech.AudioProcessing;
 
+import speech.NeuralNetClient;
 import uk.ac.bath.audio.FFTWorker;
 import uk.org.toot.audio.core.AudioBuffer;
 

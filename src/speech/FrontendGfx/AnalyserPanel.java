@@ -1,9 +1,10 @@
-package speech;
+package speech.FrontendGfx;
 
 import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
 
 public class AnalyserPanel extends JPanel{
 

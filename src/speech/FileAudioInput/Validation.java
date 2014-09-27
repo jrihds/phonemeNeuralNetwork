@@ -1,4 +1,4 @@
-package speech;
+package speech.FileAudioInput;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +10,9 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import javax.swing.Timer;
+
+import speech.NeuralNet;
+import speech.AudioProcessing.SpectrumAdjust;
 
 public class Validation {
 

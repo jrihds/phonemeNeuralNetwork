@@ -1,9 +1,11 @@
-package speech;
+package speech.DataAcquisition;
 
 import com.frinika.audio.io.AudioReader;
 import com.frinika.audio.io.VanillaRandomAccessFile;
 import java.io.File;
 import java.io.RandomAccessFile;
+
+import speech.AudioProcessing.SpectralAnalysisProcess;
 import uk.org.toot.audio.core.AudioBuffer; 
 
 //

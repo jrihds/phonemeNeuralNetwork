@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import speech.AudioProcessing.SpectralAnalysisProcess;
+import speech.AudioProcessing.SpectrumAdjust;
+import speech.FrontendGfx.DrawScrollingSpect;
 import uk.ac.bath.ai.backprop.BackProp;
 
 public class NeuralNetClient {

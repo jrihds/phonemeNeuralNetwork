@@ -1,4 +1,4 @@
-package speech;
+package speech.FrontendGfx;
 
 /* 
  * Copyright (c) 2007 P.J.Leonard
@@ -40,7 +40,6 @@ import java.awt.image.MemoryImageSource;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
-import speech.Mapper;
 
 /**
  * 
