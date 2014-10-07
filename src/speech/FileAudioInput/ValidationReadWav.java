@@ -109,7 +109,7 @@ public class ValidationReadWav {
 		File file = new File(filename);
 		RandomAccessFile rafG = new RandomAccessFile(file, "r");
 		AudioReader audioReader = new AudioReader(new VanillaRandomAccessFile(
-				rafG),Config.sampleRate);
+				rafG),44100.0f);
 		AudioBuffer chunk = new AudioBuffer("James buffer", 2, fftSize, Fs);
 		chunk.setRealTime(true);
 
