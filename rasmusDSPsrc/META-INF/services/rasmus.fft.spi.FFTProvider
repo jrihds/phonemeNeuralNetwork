@@ -1,0 +1,13 @@
+# rasmus.fft.spi.FFTProvider
+rasmus.fft.providers.ComplexRadix2
+rasmus.fft.providers.ComplexSimpleRadix2
+rasmus.fft.providers.ComplexSimple2Radix2
+rasmus.fft.providers.ComplexSimple3Radix2
+rasmus.fft.providers.ComplexToReal
+rasmus.fft.providers.RealToComplex
+rasmus.fft.providers.ComplexToReal2
+rasmus.fft.providers.RealToComplex2
+rasmus.fft.providers.ComplexDFT
+rasmus.fft.providers.ComplexDFT2
+rasmus.fft.kissfft.KissFFTProvider
+#rasmus.fft.fftw.FFTWProvider
