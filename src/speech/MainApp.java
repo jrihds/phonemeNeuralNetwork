@@ -10,7 +10,7 @@ import javax.swing.Timer;
 import speech.AudioProcessing.RealTimeSpectralSource;
 import speech.AudioProcessing.SpectralAnalysisProcess;
 import speech.DataAcquisition.ReadImage;
-import speech.FrontendGfx.MakeFrames;
+import speech.FrontendGfx.MainApplicationWindow;
 
 public class MainApp {
 	
@@ -26,7 +26,7 @@ public class MainApp {
 	public double amplitude;
 	public String phonemeText;
 	
-	MakeFrames mainApplicationWindow;
+	MainApplicationWindow mainApplicationWindow;
 	Timer timer;
 	NeuralNetClient neuralNetwork;
 	
@@ -37,7 +37,7 @@ public class MainApp {
 	
 	MainApp() {
 		
-		mainApplicationWindow = new MakeFrames(numberOfPhonemes, frequencySpectrum); 	
+		mainApplicationWindow = new MainApplicationWindow(numberOfPhonemes, frequencySpectrum); 	
 		mainApplicationWindow.makeMaster();
 		
 		ReadImage readImage = new ReadImage();

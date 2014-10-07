@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 
 import speech.AudioProcessing.SpectralAnalysisProcess;
 import speech.AudioProcessing.SpectrumAdjust;
-import speech.FrontendGfx.DrawScrollingSpect;
+import speech.FrontendGfx.DrawScrollingSpectrum;
 import uk.ac.bath.ai.backprop.BackProp;
 
 public class NeuralNetClient {
@@ -15,14 +15,14 @@ public class NeuralNetClient {
 	NeuralNet neuralNet;
 	SpectrumAdjust specAdj;
 	SpectralAnalysisProcess sprectralAnalysis;
-	DrawScrollingSpect scrollingSpect;
+	DrawScrollingSpectrum scrollingSpect;
 	private double outputs[];
 	double smoothed[];
 	double magnLog[];
 	int fftSize;
 	int onscreenBins;
 	
-	public NeuralNetClient(int fftsize, int onscreenBins,DrawScrollingSpect scrollingSpect) {
+	public NeuralNetClient(int fftsize, int onscreenBins,DrawScrollingSpectrum scrollingSpect) {
 		
 		this.onscreenBins = onscreenBins;
 		this.fftSize=fftsize;

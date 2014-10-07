@@ -12,12 +12,12 @@ import javax.swing.*;
  *  by calling vectorMean
  */
 
-public class DrawHist extends JPanel {
+public class DrawHistogram extends JPanel {
 
 	int onscreenBins;
 	double magn[];
 
-	public DrawHist(int onscreenBins) {
+	public DrawHistogram(int onscreenBins) {
 		this.onscreenBins = onscreenBins;
 		magn = new double[onscreenBins];
 	}

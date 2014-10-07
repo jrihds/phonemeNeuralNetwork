@@ -53,7 +53,7 @@ import javax.swing.JPanel;
  * @author pjl
  * 
  */
-public class DrawScrollingSpect extends JPanel {
+public class DrawScrollingSpectrum extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	Dimension size;
@@ -69,7 +69,7 @@ public class DrawScrollingSpect extends JPanel {
 	ValMapper mapper;
 	double peaks[] = new double[128];
 
-	public DrawScrollingSpect(int nChunks) {
+	public DrawScrollingSpectrum(int nChunks) {
 		this.nChunks = nChunks;
 		this.mapper = new ValMapper();
 		mapper.update(null, null);

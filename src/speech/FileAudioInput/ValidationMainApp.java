@@ -14,7 +14,7 @@ import speech.NeuralNet;
 import speech.NeuralNetClient;
 import speech.AudioProcessing.SpectrumAdjust;
 import speech.DataAcquisition.ReadImage;
-import speech.FrontendGfx.MakeFrames;
+import speech.FrontendGfx.MainApplicationWindow;
 
 public class ValidationMainApp {
 	
@@ -36,13 +36,13 @@ public class ValidationMainApp {
 	static ValidationReadWav readTestWav;
 	static NeuralNet neuralNet;
 	static SpectrumAdjust specAdj;
-	static MakeFrames frames;
+	static MainApplicationWindow frames;
 	static ReadImage ri;
 	static NeuralNetClient client;
 	
 	public static void main(String args[]) throws Exception {
 	
-		frames = new MakeFrames(phonemes, onscreenBins); 		// Create gfx for output
+		frames = new MainApplicationWindow(phonemes, onscreenBins); 		// Create gfx for output
 		
 		final ReadImage ri = new ReadImage();
 		try {

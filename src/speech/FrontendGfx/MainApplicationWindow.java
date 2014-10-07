@@ -18,27 +18,27 @@ import javax.swing.JPanel;
 
 // addComponent function from http://www.java-forums.org/
 
-public class MakeFrames {
+public class MainApplicationWindow {
 
-	DrawTract drawTract;
-	DrawTract drawTargTract;
+	DrawVocalTract drawTract;
+	DrawVocalTract drawTargTract;
 	DrawLips drawLips;
 	DrawLips drawTargLips;
 	AnalyserPanel meterPanel;
 	DrawGraph drawGraph;
-	public DrawScrollingSpect drawScroll;
-	DrawHist drawHist;
+	public DrawScrollingSpectrum drawScroll;
+	DrawHistogram drawHist;
 
 	private JFrame masterFrame;
 
-	public MakeFrames(int phonemes, int onscreenBins) {
-		drawTract = new DrawTract(phonemes);
-		drawTargTract = new DrawTract(phonemes);
+	public MainApplicationWindow(int phonemes, int onscreenBins) {
+		drawTract = new DrawVocalTract(phonemes);
+		drawTargTract = new DrawVocalTract(phonemes);
 		drawLips = new DrawLips(phonemes);
 		drawTargLips = new DrawLips(phonemes);
 		drawGraph = new DrawGraph(phonemes);
-		drawScroll = new DrawScrollingSpect(480);
-		drawHist = new DrawHist(onscreenBins);
+		drawScroll = new DrawScrollingSpectrum(480);
+		drawHist = new DrawHistogram(onscreenBins);
 	}
 
 	public void makeMaster() {

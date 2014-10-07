@@ -11,7 +11,7 @@ import javax.swing.*;
 *  by calling vectorMean
 */
 
-public class DrawTract extends JPanel {
+public class DrawVocalTract extends JPanel {
 
 	public int posx[] = new int[102];
 	public int posy[] = new int[102];
@@ -19,7 +19,7 @@ public class DrawTract extends JPanel {
 	int phonemes;
 	Font font;
 	
-	public DrawTract(int phonemes) {
+	public DrawVocalTract(int phonemes) {
 		this.phonemes = phonemes;
 		font=new Font("sansserif", Font.BOLD, 32);
 	}
