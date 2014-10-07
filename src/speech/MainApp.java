@@ -30,16 +30,14 @@ public class MainApp {
 	Timer timer;
 	NeuralNetClient neuralNetwork;
 	
-	public boolean isApplet = false;
-	
 	public static void main(String args[]) throws Exception {
-		MainApp app = new MainApp(false);
+		MainApp app = new MainApp();
 		app.start();
 	}
 	
-	MainApp(boolean isApplet) {
+	MainApp() {
 		
-		mainApplicationWindow = new MakeFrames(isApplet, numberOfPhonemes, frequencySpectrum); 	
+		mainApplicationWindow = new MakeFrames(numberOfPhonemes, frequencySpectrum); 	
 		mainApplicationWindow.makeMaster();
 		
 		ReadImage readImage = new ReadImage();

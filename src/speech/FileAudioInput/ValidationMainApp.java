@@ -42,7 +42,7 @@ public class ValidationMainApp {
 	
 	public static void main(String args[]) throws Exception {
 	
-		frames = new MakeFrames(false, phonemes, onscreenBins); 		// Create gfx for output
+		frames = new MakeFrames(phonemes, onscreenBins); 		// Create gfx for output
 		
 		final ReadImage ri = new ReadImage();
 		try {

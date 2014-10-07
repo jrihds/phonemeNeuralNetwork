@@ -20,8 +20,6 @@ import javax.swing.JPanel;
 
 public class MakeFrames {
 
-	private boolean isApplet;
-
 	DrawTract drawTract;
 	DrawTract drawTargTract;
 	DrawLips drawLips;
@@ -33,8 +31,7 @@ public class MakeFrames {
 
 	private JFrame masterFrame;
 
-	public MakeFrames(boolean isApplet, int phonemes, int onscreenBins) {
-		this.isApplet = isApplet;
+	public MakeFrames(int phonemes, int onscreenBins) {
 		drawTract = new DrawTract(phonemes);
 		drawTargTract = new DrawTract(phonemes);
 		drawLips = new DrawLips(phonemes);
