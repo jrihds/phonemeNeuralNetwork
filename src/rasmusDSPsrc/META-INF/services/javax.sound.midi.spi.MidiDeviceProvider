@@ -1,4 +1,0 @@
-# midi providers
-rasmus.midi.provider.MultiMidiCastProvider
-rasmus.midi.provider.RasmusSynthesizerProvider
-uk.co.drpj.midi.VirtualPianoProvider
