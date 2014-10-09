@@ -82,7 +82,7 @@ public class RealTimeSpectralSource {
 				output.processAudio(chunk);
 				spectrum = spectralProcess.processAudio(chunk);
 				if (client != null)
-					client.process(spectrum);
+					client.forwardPass(spectrum);
 			}
 			public void setEnabled(boolean arg0) {
 			}

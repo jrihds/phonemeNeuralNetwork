@@ -20,25 +20,27 @@ import javax.swing.JPanel;
 
 public class MainApplicationWindow {
 
-	DrawVocalTract drawTract;
-	DrawVocalTract drawTargTract;
-	DrawLips drawLips;
-	DrawLips drawTargLips;
-	AnalyserPanel meterPanel;
-	DrawGraph drawGraph;
-	public DrawScrollingSpectrum drawScroll;
-	DrawHistogram drawHist;
+	DrawVocalTract drawCurrentVocalTract;
+	DrawVocalTract drawTargetVocalTract;
+	
+	DrawLips drawCurrentLipShape;
+	DrawLips drawTargetLipShape;
+	
+	DrawScrollingPhonemeGraph drawScrollingPhonemeGraph;
+	
+	public DrawScrollingSpectrum drawScrollingSpectrum;
+	DrawScrollingSpectrumHistogram drawScrillingSpectrumHistogram;
 
 	private JFrame masterFrame;
 
 	public MainApplicationWindow(int phonemes, int onscreenBins) {
-		drawTract = new DrawVocalTract(phonemes);
-		drawTargTract = new DrawVocalTract(phonemes);
-		drawLips = new DrawLips(phonemes);
-		drawTargLips = new DrawLips(phonemes);
-		drawGraph = new DrawGraph(phonemes);
-		drawScroll = new DrawScrollingSpectrum(480);
-		drawHist = new DrawHistogram(onscreenBins);
+		drawCurrentVocalTract = new DrawVocalTract(phonemes);
+		drawTargetVocalTract = new DrawVocalTract(phonemes);
+		drawCurrentLipShape = new DrawLips(phonemes);
+		drawTargetLipShape = new DrawLips(phonemes);
+		drawScrollingPhonemeGraph = new DrawScrollingPhonemeGraph(phonemes);
+		drawScrollingSpectrum = new DrawScrollingSpectrum(480);
+		drawScrillingSpectrumHistogram = new DrawScrollingSpectrumHistogram(onscreenBins);
 	}
 
 	public void makeMaster() {
@@ -114,13 +116,13 @@ public class MainApplicationWindow {
 		content.setLayout(null);
 		frame.addKeyListener(new KeyHandler());
 
-		addComponent(content, drawLips, 680, 0, 320, 400);
-		addComponent(content, drawTract, 680, 400, 320, 400);
-		addComponent(content, drawTargLips, 1000, 0, 320, 400);
-		addComponent(content, drawTargTract, 1000, 400, 320, 400);
-		addComponent(content, drawGraph, 0, 0, 360, 400);
-		addComponent(content, drawScroll, 0, 400, 480, 400);
-		addComponent(content, drawHist, 480, 400, 200, 400);
+		addComponent(content, drawCurrentLipShape, 680, 0, 320, 400);
+		addComponent(content, drawCurrentVocalTract, 680, 400, 320, 400);
+		addComponent(content, drawTargetLipShape, 1000, 0, 320, 400);
+		addComponent(content, drawTargetVocalTract, 1000, 400, 320, 400);
+		addComponent(content, drawScrollingPhonemeGraph, 0, 0, 360, 400);
+		addComponent(content, drawScrollingSpectrum, 0, 400, 480, 400);
+		addComponent(content, drawScrillingSpectrumHistogram, 480, 400, 200, 400);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -132,15 +134,15 @@ public class MainApplicationWindow {
 			double[][][] innerLips, double[][][] outerLips,
 			double[] neuralOutputs, double[] magn) {
 
-		drawTract.vectorMean(vocalTract, neuralOutputs, text);
-		drawLips.vectorMean(innerLips, outerLips, neuralOutputs);
-		drawGraph.updateGraph(neuralOutputs, KeyHandler.scrollSpeed,
+		drawCurrentVocalTract.vectorMean(vocalTract, neuralOutputs, text);
+		drawCurrentLipShape.vectorMean(innerLips, outerLips, neuralOutputs);
+		drawScrollingPhonemeGraph.updateGraph(neuralOutputs, KeyHandler.scrollSpeed,
 				KeyHandler.scrollTransparent, KeyHandler.scrollPause, text);
-		drawHist.update(magn);
+		drawScrillingSpectrumHistogram.update(magn);
 		masterFrame.repaint();
 
-		drawTargTract.vectorMean(vocalTract, KeyHandler.targetNeuralOutputs, KeyHandler.text);
-		drawTargLips.vectorMean(innerLips, outerLips, KeyHandler.targetNeuralOutputs);
+		drawTargetVocalTract.vectorMean(vocalTract, KeyHandler.targetNeuralOutputs, KeyHandler.text);
+		drawTargetLipShape.vectorMean(innerLips, outerLips, KeyHandler.targetNeuralOutputs);
 	}
 
 	private void addComponent(Container container, Component c, int x, int y,

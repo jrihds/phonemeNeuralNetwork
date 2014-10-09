@@ -47,8 +47,8 @@ public class ValidationMainApp {
 		final ReadImage ri = new ReadImage();
 		try {
 			vocalTract = ri.readTract(); 			// Read in data from images
-			lipsInner = ri.readLips1(); 			// of lip and tract shapes
-			lipsOuter = ri.readLips2();
+			lipsInner = ri.readLipContour1(); 			// of lip and tract shapes
+			lipsOuter = ri.readLipContour2();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -78,8 +78,8 @@ public class ValidationMainApp {
 				spectrum[j] = 2.0*testWav[k][j];
 			}
 
-			magnLog = specAdj.linearLog(onscreenBins, fftSize, spectrum);
-			smoothed = specAdj.running3Average(onscreenBins, magnLog);
+			magnLog = specAdj.linearToLog(onscreenBins, fftSize, spectrum);
+			smoothed = specAdj.smoothSpectrumRunningAverageOf3(onscreenBins, magnLog);
 			outputs = neuralNet.forwardPass(smoothed);
 			
 			for (int l = 0; l < outputs.length; l++) {

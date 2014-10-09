@@ -3,18 +3,18 @@ package speech;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.swing.Timer;
 
 import speech.AudioProcessing.RealTimeSpectralSource;
 import speech.AudioProcessing.SpectralAnalysisProcess;
+
 import speech.DataAcquisition.ReadImage;
 import speech.FrontendGfx.MainApplicationWindow;
 
 public class MainApp {
 	
-	public int frequencySpectrum = 128;
+	public int frequencyBins = 128;
 	public int fftSize = 1024;
 	public int numberOfPhonemes = 6;
 	
@@ -37,14 +37,14 @@ public class MainApp {
 	
 	MainApp() {
 		
-		mainApplicationWindow = new MainApplicationWindow(numberOfPhonemes, frequencySpectrum); 	
+		mainApplicationWindow = new MainApplicationWindow(numberOfPhonemes, frequencyBins); 	
 		mainApplicationWindow.makeMaster();
 		
 		ReadImage readImage = new ReadImage();
 		try {
 			vocalTractContour = readImage.readTract(); 				// Read in data from images of lip
-			innerLipContour = readImage.readLips1(); 					//		and vocal tract shapes
-			outerLipsContour = readImage.readLips2();					// 		
+			innerLipContour = readImage.readLipContour1(); 					//		and vocal tract shapes
+			outerLipsContour = readImage.readLipContour2();					// 		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -86,14 +86,14 @@ public class MainApp {
 		RealTimeSpectralSource rtSource = new RealTimeSpectralSource(
 				spectralAnalysis);
 		
-		neuralNetwork = new NeuralNetClient(fftSize, frequencySpectrum, mainApplicationWindow.drawScroll);
+		neuralNetwork = new NeuralNetClient(fftSize, frequencyBins, mainApplicationWindow.drawScrollingSpectrum);
 		
 		// Setup input from soundcard
 		String inName = "default [default]";
 		String outName = "default [default]";
 		
 		try {
-			rtSource.startAudio(inName, outName, frequencySpectrum, neuralNetwork);
+			rtSource.startAudio(inName, outName, frequencyBins, neuralNetwork);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

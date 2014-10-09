@@ -11,7 +11,10 @@ public class SpectrumAdjust {
 
 	public double average, temp, error;
 
-	public double[] linearLog(int onscreenBins, int fftsize, double[] spectrum) {
+	public double[] linearToLog(int onscreenBins, int fftsize, double[] spectrum) {
+		
+		// pass a linear spectrum of audio data, convert it into a logarithmic spectrum
+		// 		and return the value
 
 		int triangular = 0;
 
@@ -34,7 +37,7 @@ public class SpectrumAdjust {
 
 	}
 
-	public double[] running3Average(int onscreen_bins, double[] magnLog) {
+	public double[] smoothSpectrumRunningAverageOf3(int onscreen_bins, double[] magnLog) {
 
 		double[] smoothed = new double[onscreen_bins];
 		for (int i = 1; i < (onscreen_bins - 1); i++) {

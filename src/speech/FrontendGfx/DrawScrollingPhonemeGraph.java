@@ -12,7 +12,7 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
-public class DrawGraph extends JPanel {
+public class DrawScrollingPhonemeGraph extends JPanel {
 
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class DrawGraph extends JPanel {
 	int in_value_last[], speed, phonemes;
 	boolean scrollTransparent;
 
-	public DrawGraph(int phonemes) {
+	public DrawScrollingPhonemeGraph(int phonemes) {
 		this.phonemes = phonemes;
 		speed = 15;
 		scrollTransparent = false;

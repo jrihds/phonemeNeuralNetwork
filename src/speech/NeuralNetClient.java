@@ -13,21 +13,21 @@ import uk.ac.bath.ai.backprop.BackProp;
 public class NeuralNetClient {
 	
 	NeuralNet neuralNet;
-	SpectrumAdjust specAdj;
+	SpectrumAdjust spectrumAdjust;
 	SpectralAnalysisProcess sprectralAnalysis;
-	DrawScrollingSpectrum scrollingSpect;
+	DrawScrollingSpectrum drawScrollingSpectrum;
 	private double outputs[];
 	double smoothed[];
 	double magnLog[];
 	int fftSize;
-	int onscreenBins;
+	int frequencyBins;
 	
-	public NeuralNetClient(int fftsize, int onscreenBins,DrawScrollingSpectrum scrollingSpect) {
+	public NeuralNetClient(int fftsize, int frequencyBins, DrawScrollingSpectrum scrollingSpect) {
 		
-		this.onscreenBins = onscreenBins;
+		this.frequencyBins = frequencyBins;
 		this.fftSize=fftsize;
-		specAdj = new SpectrumAdjust();
-		this.scrollingSpect=scrollingSpect;
+		spectrumAdjust = new SpectrumAdjust();
+		this.drawScrollingSpectrum=scrollingSpect;
 		outputs = new double[6];
 		
 		FileInputStream ostr;
@@ -46,17 +46,19 @@ public class NeuralNetClient {
 		
 	}
 
-	public void process(double[] spectrum) {
+	public void forwardPass(double[] spectrum) {
 		
-		magnLog = specAdj.linearLog(onscreenBins, fftSize, spectrum);
+		magnLog = spectrumAdjust.linearToLog(frequencyBins, fftSize, spectrum);
 		
-		smoothed = specAdj.running3Average(onscreenBins, magnLog);
+		smoothed = spectrumAdjust.smoothSpectrumRunningAverageOf3(frequencyBins, magnLog);
 		
 		for (int i=0; i<smoothed.length; i++) {
 			smoothed[i]*=2;									// This is adding volume to the input signal.
 		}													// the USB audio interface isn't 'hot' enough
 		
-		if (scrollingSpect != null) scrollingSpect.notifyMoreDataReady(magnLog);
+		if (drawScrollingSpectrum != null) drawScrollingSpectrum.notifyMoreDataReady(magnLog);
+		// the line of code above is bad and needs fixing
+		
 		outputs = neuralNet.forwardPass(smoothed);
 	}
 	

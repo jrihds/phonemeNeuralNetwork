@@ -63,8 +63,8 @@ public class Validation {
 					spectrum[j] = testWav[k][j][i];
 				}
 
-				magnLog = specAdj.linearLog(onscreenBins, fftSize, spectrum);
-				smoothed = specAdj.running3Average(onscreenBins, magnLog);
+				magnLog = specAdj.linearToLog(onscreenBins, fftSize, spectrum);
+				smoothed = specAdj.smoothSpectrumRunningAverageOf3(onscreenBins, magnLog);
 				outputs = neuralNet.forwardPass(smoothed);
 
 				System.out.println(
