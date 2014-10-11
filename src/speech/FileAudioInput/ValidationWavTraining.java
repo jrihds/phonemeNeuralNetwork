@@ -106,7 +106,7 @@ public class ValidationWavTraining {
 		System.out.println("Convergence time: " + ((System.nanoTime()-startTime)/1000000000));
 
 		FileOutputStream istr = new FileOutputStream(
-				"src/textfiles/network.txt");
+				"src/neuralNetworkStore/network.txt");
 		ObjectOutputStream out = new ObjectOutputStream(istr);
 		out.writeObject(neuralNet);
 		out.close();

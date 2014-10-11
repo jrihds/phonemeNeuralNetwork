@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="video/GetSnapshotApp.java|video/WebcamViewer.java" kind="src" path="src"/>
+	<classpathentry excluding="video/GetSnapshotApp.java|video/WebcamViewer.java|video/|video/" kind="src" path="src"/>
 	<classpathentry kind="src" path="bathNeuralNet"/>
 	<classpathentry kind="src" path="frinikaSrc"/>
 	<classpathentry kind="src" path="rasmusDSPsrc"/>

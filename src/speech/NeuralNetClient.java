@@ -7,32 +7,27 @@ import java.io.ObjectInputStream;
 
 import speech.AudioProcessing.SpectralAnalysisProcess;
 import speech.AudioProcessing.SpectrumAdjust;
-import speech.FrontendGfx.DrawScrollingSpectrum;
-import uk.ac.bath.ai.backprop.BackProp;
 
 public class NeuralNetClient {
 	
 	NeuralNet neuralNet;
 	SpectrumAdjust spectrumAdjust;
 	SpectralAnalysisProcess sprectralAnalysis;
-	DrawScrollingSpectrum drawScrollingSpectrum;
 	private double neuralNetOutputs[];
 	double logarithmicAudio[];
 	int fftSize;
 	int frequencyBins;
 	
-	//public NeuralNetClient(int fftsize, int frequencyBins, DrawScrollingSpectrum scrollingSpect) {
 	public NeuralNetClient(int fftsize, int frequencyBins) {
 		
 		this.frequencyBins = frequencyBins;
 		this.fftSize=fftsize;
 		spectrumAdjust = new SpectrumAdjust();
-		//this.drawScrollingSpectrum=scrollingSpect;
 		neuralNetOutputs = new double[6];
 		
 		FileInputStream ostr;
 		try {
-			ostr = new FileInputStream("src/textfiles/network.txt");
+			ostr = new FileInputStream("src/neuralNetworkStore/network.txt");
 			ObjectInputStream in = new ObjectInputStream(ostr);
 			neuralNet = (NeuralNet) in.readObject();
 			in.close();
@@ -51,8 +46,6 @@ public class NeuralNetClient {
 		logarithmicAudio = spectrumAdjust.linearToLog(frequencyBins, fftSize, spectrum);
 		logarithmicAudio = spectrumAdjust.smoothSpectrumRunningAverageOf3(frequencyBins, logarithmicAudio);
 		logarithmicAudio = spectrumAdjust.changeVolume(2, logarithmicAudio);
-		
-		//if (drawScrollingSpectrum != null) drawScrollingSpectrum.notifyMoreDataReady(logarithmicAudio);
 		
 		neuralNetForwardPass(logarithmicAudio);
 	}

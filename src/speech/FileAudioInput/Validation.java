@@ -38,7 +38,7 @@ public class Validation {
 
 		FileInputStream ostr;
 		try {
-			ostr = new FileInputStream("src/textfiles/network.txt");
+			ostr = new FileInputStream("src/neuralNetworkStore/network.txt");
 			ObjectInputStream in = new ObjectInputStream(ostr);
 			neuralNet = (NeuralNet) in.readObject();
 			in.close();
