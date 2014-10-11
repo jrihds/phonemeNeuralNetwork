@@ -1,4 +1,4 @@
-package speech.DataAcquisition;
+package speech.dataAcquisition;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 //
 /*
 * 
-* Reads both lip and vocal tract data from a file and stores
+* Reads both lip and vocal tract contour data from a file and stores
 * the data in arrays
 * 
 * */
@@ -29,7 +29,7 @@ public class ReadImage {
 	
 		for (int f=0; f<6; f++) {
 
-			String resource="imagefiles/"+names[f]+".bmp";
+			String resource="imageFiles/"+names[f]+".bmp";
 
 			URL url=this.getClass().getResource(resource);
 			BufferedImage img = ImageIO.read(url);
@@ -66,7 +66,7 @@ public double[][][] readInnerLipContour() throws IOException {
 		String names[]=	{"lipsEEE","lipsEHH","lipsERR","lipsAHH","lipsOOH","lipsUHH"};
 
 		for (int f=0; f<6; f++) {
-			String resource="imagefiles/"+names[f]+".bmp";
+			String resource="imageFiles/"+names[f]+".bmp";
 			URL url=this.getClass().getResource(resource);
 			BufferedImage img = ImageIO.read(url);
 			int count=0;
@@ -101,7 +101,7 @@ public double[][][] readOuterLipContour() throws IOException {
 	for (int f=0; f<6; f++) {
 
 		String names[]=	{"lipsEEE","lipsEHH","lipsERR","lipsAHH","lipsOOH","lipsUHH"};
-		String resource="imagefiles/"+names[f]+".bmp";
+		String resource="imageFiles/"+names[f]+".bmp";
 		URL url=this.getClass().getResource(resource);
 		BufferedImage img = ImageIO.read(url);
 	

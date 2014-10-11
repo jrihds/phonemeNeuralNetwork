@@ -1,13 +1,12 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 
 import java.awt.Color;
-
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
 public class AnalyserPanel extends JPanel{
 
+	static final long serialVersionUID = 0L;
 	public  int onscreen_bins = 128;
 	public int outputs = 6;
 	private MeterPanel meterArray[] = new MeterPanel[onscreen_bins]; 

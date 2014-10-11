@@ -1,15 +1,15 @@
-package speech;
+package speech.neuralNetwork;
 
 import java.io.Serializable;
 
-// This is an interface so we can combine neural network classes
-// and benchmark them. Primarily, the PJL network is now used.
+// This interface is implemented by the neural network developed
+//   by Paul Leonard which can be found in 'bathNeuralNet' directory
+//	 as part of the uk.ac.bath package
 
 public interface NeuralNet extends Serializable{
 
 	double[] forwardPass(double[] smoothed);
 
-	// randomize network
 	void randomWeights();
 
 	double [] backPropTrain(double[] phonemeSmoothed, double[] trainOutvals);

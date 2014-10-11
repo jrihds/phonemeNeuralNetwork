@@ -1,8 +1,8 @@
-package speech.AudioProcessing;
+package speech.audioProcessing;
 
 import java.util.List;
 
-import speech.NeuralNetClient;
+import speech.neuralNetwork.NeuralNetClient;
 import uk.org.toot.audio.core.AudioBuffer;
 import uk.org.toot.audio.server.AudioClient;
 import uk.org.toot.audio.server.IOAudioProcess;
@@ -11,13 +11,13 @@ import uk.org.toot.audio.server.MultiIOJavaSoundAudioServer;
 
 public class RealTimeSpectralSource {
 
-	private static JavaSoundAudioServer audioServer;
-	private static AudioBuffer chunk;
-	private static AudioClient audioClient;
-	private static SpectralAnalysisProcess spectralProcess;
+	private JavaSoundAudioServer audioServer;
+	private AudioBuffer chunk;
+	private AudioClient audioClient;
+	private SpectralAnalysisProcess spectralProcess;
 	
-	public static NeuralNetClient client;
-	public static double spectrum[];
+	public NeuralNetClient client;
+	public double spectrum[];
 
 	public RealTimeSpectralSource(SpectralAnalysisProcess spectralProcess) {
 		this.spectralProcess = spectralProcess;

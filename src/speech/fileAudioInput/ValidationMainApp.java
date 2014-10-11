@@ -1,20 +1,16 @@
-package speech.FileAudioInput;
+package speech.fileAudioInput;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
 
-import javax.swing.Timer;
-
-import speech.NeuralNet;
-import speech.NeuralNetClient;
-import speech.AudioProcessing.SpectrumAdjust;
-import speech.DataAcquisition.ReadImage;
-import speech.FrontendGfx.MainApplicationWindow;
+import speech.audioProcessing.SpectrumAdjust;
+import speech.dataAcquisition.ReadImage;
+import speech.frontendGfx.MainApplicationWindow;
+import speech.neuralNetwork.NeuralNet;
+import speech.neuralNetwork.NeuralNetClient;
 
 public class ValidationMainApp {
 	

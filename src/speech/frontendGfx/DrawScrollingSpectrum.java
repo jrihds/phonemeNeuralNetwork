@@ -1,4 +1,4 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 
 /* 
  * Copyright (c) 2007 P.J.Leonard

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Random;
 import java.util.Vector;
 
-import speech.NeuralNet;
+import speech.neuralNetwork.NeuralNet;
 import uk.ac.bath.tweaks.Tweakable;
 
 public class BackPropRecursive  implements Serializable,NeuralNet {

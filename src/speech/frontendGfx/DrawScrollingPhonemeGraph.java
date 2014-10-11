@@ -1,4 +1,4 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 
 
 import java.awt.AlphaComposite;
@@ -66,7 +66,6 @@ public class DrawScrollingPhonemeGraph extends JPanel {
 			screenSize = new Dimension(getSize());
 			offScreenImage = createImage(getSize().width, getSize().height);
 			offScreenGraphics = offScreenImage.getGraphics();
-			System.out.println("I just made some gfx");
 		}
 		
 		if (play) {

@@ -1,10 +1,10 @@
-package speech;
+package speech.fileAudioInput;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
-import speech.AudioProcessing.SpectrumAdjust;
-import speech.DataAcquisition.ReadWav;
+import speech.audioProcessing.SpectrumAdjust;
+import speech.neuralNetwork.NeuralNet;
 import uk.ac.bath.ai.backprop.BackProp;
 
 //
@@ -15,11 +15,11 @@ import uk.ac.bath.ai.backprop.BackProp;
  * a variety of sound sources
  */
 
-public class WavTraining {
+public class ValidationWavTraining {
 	
 	public static NeuralNet neuralNet;
 	public static SpectrumAdjust specAdjust;
-	public static ReadWav readWav;
+	public static ValidationReadWav readWav;
 	
 	public static int Fs = 44100;
 	public static int maxAudioLength = 1000;
@@ -31,8 +31,8 @@ public class WavTraining {
 	public static int fftSize = 1024;
 	public static int onscreenBins = 128;
 	
-	public static double alpha = 300000.0;
-	public static double beta = .000001;
+	public static double alpha = 1000.0;
+	public static double beta = 0.0001;
 	
 	public static double maxError = 0.01;
 	
@@ -44,7 +44,7 @@ public class WavTraining {
 
 		neuralNet = new BackProp(sz, beta, alpha, null);
 		specAdjust = new SpectrumAdjust();
-		readWav = new ReadWav(outputs);
+		readWav = new ValidationReadWav(outputs, 2);
 
 		neuralNet.randomWeights(0.0, 0.01);
 
@@ -60,11 +60,13 @@ public class WavTraining {
 		// Read wavs from file
 		double[][][] wavs = readWav.getMonoThongWavs(fftSize, outputs, Fs, maxAudioLength);
 		
+		long startTime = System.nanoTime();
+		
 		while (error > maxError) {
 			
 			error = 0.0;
 			
-			i_max = readWav.file_length[0] - 1;
+			i_max = 110;//readWav.file_length[0] - 1;
 
 			// readWav.file_length[0] can be replaced with a number
 
@@ -100,9 +102,11 @@ public class WavTraining {
 			count++;
 			
 		}
+		
+		System.out.println("Convergence time: " + ((System.nanoTime()-startTime)/1000000000));
 
 		FileOutputStream istr = new FileOutputStream(
-				"src/textfiles/network.txt");
+				"src/neuralNetworkStore/network.txt");
 		ObjectOutputStream out = new ObjectOutputStream(istr);
 		out.writeObject(neuralNet);
 		out.close();

@@ -1,11 +1,11 @@
-package speech.DataAcquisition;
+package speech.dataAcquisition;
 
 import com.frinika.audio.io.AudioReader;
 import com.frinika.audio.io.VanillaRandomAccessFile;
 import java.io.File;
 import java.io.RandomAccessFile;
 
-import speech.AudioProcessing.SpectralAnalysisProcess;
+import speech.audioProcessing.SpectralAnalysisProcess;
 import uk.org.toot.audio.core.AudioBuffer; 
 
 //
@@ -20,13 +20,13 @@ import uk.org.toot.audio.core.AudioBuffer;
 
 public class ReadWav {
 
-	public static int file_length[];
+	public int file_length[];
 
 	public ReadWav(int outputs) {
 		file_length = new int[outputs + 1];
 	}
 
-	public static double[][][] getMonoThongWavs(int fftSize, int outputs,
+	public double[][][] getMonoThongWavs(int fftSize, int outputs,
 			int Fs, int maxAudioLength) throws Exception {
 
 		double allWavs[][][] = new double[maxAudioLength][fftSize][21];
@@ -36,7 +36,7 @@ public class ReadWav {
 
 		for (int i = 0; i < outputs + 1; i++) {
 
-			String resource = "src/speech/wavfiles/" + names[i] + ".wav";
+			String resource = "src/speech/wavFiles/trainingSplice/" + names[i] + ".wav";
 			double wav[][] = readWav(resource, fftSize, Fs, i);
 
 			for (int j = 0; j < wav.length; j++) {
@@ -50,7 +50,7 @@ public class ReadWav {
 
 	}
 
-	public static double[][] readWav(String filename, int fftSize, int Fs,
+	public double[][] readWav(String filename, int fftSize, int Fs,
 			int num) throws Exception {
 
 		SpectralAnalysisProcess spectralAnalysis = new SpectralAnalysisProcess(

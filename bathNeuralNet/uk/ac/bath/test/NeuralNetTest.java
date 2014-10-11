@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
-import speech.NeuralNet;
+import speech.neuralNetwork.NeuralNet;
 import uk.ac.bath.ai.backprop.BackProp;
 
 public class NeuralNetTest {

@@ -1,4 +1,4 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 
 import java.awt.*;
 import javax.swing.*;
@@ -13,6 +13,7 @@ import javax.swing.*;
 
 public class DrawVocalTract extends JPanel {
 
+	static final long serialVersionUID = 0L;
 	public int posx[] = new int[102];
 	public int posy[] = new int[102];
 	String text="";

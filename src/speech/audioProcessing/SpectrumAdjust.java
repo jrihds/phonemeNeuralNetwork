@@ -1,4 +1,4 @@
-package speech.AudioProcessing;
+package speech.audioProcessing;
 
 //
 //@author JER
@@ -8,8 +8,6 @@ package speech.AudioProcessing;
  */
 
 public class SpectrumAdjust {
-
-	public double average, temp, error;
 
 	public double[] linearToLog(int onscreenBins, int fftsize, double[] spectrum) {
 		
@@ -49,8 +47,8 @@ public class SpectrumAdjust {
 	
 	public double[] changeVolume(int factor, double[] spectrum) {
 		for (int i=0; i<spectrum.length; i++) {
-			spectrum[i]*=factor;							// This is adding volume to the input signal.
-		}													// the USB audio interface isn't 'hot' enough
+			spectrum[i]*=factor;
+		}
 		return spectrum;
 	}
 

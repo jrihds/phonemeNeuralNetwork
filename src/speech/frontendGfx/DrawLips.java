@@ -1,4 +1,4 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import javax.swing.*;
 
 public class DrawLips extends JPanel {
 
+	static final long serialVersionUID = 0L;
 	public int posx[] = new int[28];
 	public int posy[] = new int[28];
 	public int posx2[] = new int[26];
@@ -27,7 +28,7 @@ public class DrawLips extends JPanel {
 		this.phonemes = phonemes;
 		
 		try{
-			img = ImageIO.read(new File("src/speech/DataAcquisition/imagefiles/face.bmp"));
+			img = ImageIO.read(new File("src/speech/dataAcquisition/imageFiles/face.bmp"));
 		} catch (IOException e) {}
 	}
 

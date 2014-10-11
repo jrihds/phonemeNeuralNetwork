@@ -1,14 +1,10 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.Transparency;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -16,7 +12,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import speech.DataAcquisition.ReadImage;
+import speech.dataAcquisition.ReadImage;
 
 // addComponent function from http://www.java-forums.org/
 
@@ -85,49 +81,22 @@ public class MainApplicationWindow {
 				if (offScreenGraphics == null || !getSize().equals(screenSize)) {
 					if (getSize().width == 0)
 						return;
-					int width = getWidth();
-					int height = getHeight();
 					screenSize = new Dimension(getSize());
-					if (true) {
-						offScreenImage = createImage(getSize().width,
-								getSize().height);
-						offScreenGraphics = offScreenImage.getGraphics();
-						System.out.println("FRAME I just made some gfx");
-					} else {
-						// This makes no difference.
-						GraphicsEnvironment env = GraphicsEnvironment
-								.getLocalGraphicsEnvironment();
-						GraphicsDevice device = env.getDefaultScreenDevice();
-						GraphicsConfiguration config = device
-								.getDefaultConfiguration();
-						offScreenImage = config.createCompatibleImage(width,
-								height, Transparency.TRANSLUCENT);
-						System.out.println("FRAME I just made some gfx");
-					}
+					offScreenImage = createImage(getSize().width, getSize().height);
+					offScreenGraphics = offScreenImage.getGraphics();
 					offScreenGraphics = offScreenImage.getGraphics();
 					
 				}
-				//long t1 = System.nanoTime();
 				
 				super.paint(offScreenGraphics);
 				
-				//long t2 = System.nanoTime();
-				//System.out.println("Render " + (t2 - t1) / 1e6);
-				
-				//long t3 = System.nanoTime();
-				
 				g.drawImage(offScreenImage, 0, 0, this);
-				
-				//long t4 = System.nanoTime();
-				//System.out.println(" Blit " + (t4 - t3) / 1e6);
-
 			}
 
 		}
 
 		JPanel content = new MyPanel();
 
-		// Container content = frame.getContentPane();
 		frame.setContentPane(content);
 		content.setLayout(null);
 		frame.addKeyListener(new KeyHandler());
@@ -136,7 +105,7 @@ public class MainApplicationWindow {
 		addComponent(content, drawCurrentVocalTract, 680, 400, 320, 400);
 		addComponent(content, drawTargetLipShape, 1000, 0, 320, 400);
 		addComponent(content, drawTargetVocalTract, 1000, 400, 320, 400);
-		addComponent(content, drawScrollingPhonemeGraph, 0, 0, 360, 400);
+		addComponent(content, drawScrollingPhonemeGraph, 0, 0, 680, 400);
 		addComponent(content, drawScrollingSpectrum, 0, 400, 480, 400);
 		addComponent(content, drawScrollingSpectrumHistogram, 480, 400, 200, 400);
 

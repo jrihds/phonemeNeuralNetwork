@@ -1,13 +1,14 @@
+package speech;
 
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-import speech.NeuralNetClient;
-import speech.AudioProcessing.RealTimeSpectralSource;
-import speech.AudioProcessing.SpectralAnalysisProcess;
-import speech.FrontendGfx.MainApplicationWindow;
+import speech.audioProcessing.RealTimeSpectralSource;
+import speech.audioProcessing.SpectralAnalysisProcess;
+import speech.frontendGfx.MainApplicationWindow;
+import speech.neuralNetwork.NeuralNetClient;
 
 public class MainApp {
 	
@@ -51,8 +52,9 @@ public class MainApp {
 			public void actionPerformed(ActionEvent ae) {				//		per second, i.e. every 40ms
 				
 				neuralNetworkOutputs = neuralNetworkClient.getNeuralNetworkOutputs();
+				
 				phonemeText = neuralNetworkClient.getStrongestPhoneme();
-				audioSpectrum = neuralNetworkClient.getSmoothedFrequencySpectrum();
+				audioSpectrum = neuralNetworkClient.getAudioSpectrum();
 				
 				mainApplicationWindow.updateGfx(
 						phonemeText,

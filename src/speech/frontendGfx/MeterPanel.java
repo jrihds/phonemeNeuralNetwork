@@ -1,4 +1,4 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 
 import java.awt.Color;
 import java.awt.Dimension;

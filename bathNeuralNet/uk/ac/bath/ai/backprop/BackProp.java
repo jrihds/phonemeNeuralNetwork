@@ -12,7 +12,7 @@ import java.util.Observer;
 import java.util.Random;
 import java.util.Vector;
 
-import speech.NeuralNet;
+import speech.neuralNetwork.NeuralNet;
 import uk.ac.bath.tweaks.Tweakable;
 import uk.ac.bath.tweaks.TweakableDouble;
 

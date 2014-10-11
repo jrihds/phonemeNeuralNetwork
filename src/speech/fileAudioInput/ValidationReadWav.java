@@ -1,4 +1,4 @@
-package speech.FileAudioInput;
+package speech.fileAudioInput;
 
 import com.frinika.audio.io.AudioReader;
 import com.frinika.audio.io.VanillaRandomAccessFile;
@@ -6,7 +6,7 @@ import com.frinika.audio.io.VanillaRandomAccessFile;
 import java.io.File;
 import java.io.RandomAccessFile;
 
-import speech.AudioProcessing.SpectralAnalysisProcess;
+import speech.audioProcessing.SpectralAnalysisProcess;
 import uk.org.toot.audio.core.AudioBuffer;
 
 //
@@ -21,16 +21,16 @@ import uk.org.toot.audio.core.AudioBuffer;
 
 public class ValidationReadWav {
 
-	public static int file_length[];
-	public static int file_length_patient;
-	public static int test;
+	public int file_length[];
+	public int file_length_patient;
+	public int test;
 
 	public ValidationReadWav(int outputs, int test) {
 		file_length = new int[outputs + 1];
 		this.test = test;
 	}
 
-	public static double[][][] getMonoThongWavs(int fftSize, int outputs,
+	public double[][][] getMonoThongWavs(int fftSize, int outputs,
 			int Fs, int maxAudioLength) throws Exception {
 
 		double allWavs[][][] = new double[maxAudioLength][fftSize][7];
@@ -45,7 +45,7 @@ public class ValidationReadWav {
 				names[i] = test + "" +names[i];
 			}
 
-			String resource = "src/speech/validationwavs/" + names[i] + ".wav";
+			String resource = "src/speech/wavFiles/originalRecording" + names[i] + ".wav";
 			double wav[][] = readWav(resource, fftSize, Fs, i);
 
 			for (int j = 0; j < wav.length; j++) {
@@ -59,7 +59,7 @@ public class ValidationReadWav {
 
 	}
 	
-	public static double[][][] getTestWavs(int fftSize, int outputs,
+	public double[][][] getTestWavs(int fftSize, int outputs,
 			int Fs, int maxAudioLength) throws Exception {
 
 		double allWavs[][][] = new double[maxAudioLength][fftSize][21];
@@ -74,7 +74,7 @@ public class ValidationReadWav {
 				names[i] = test + "" +names[i];
 			}
 
-			String resource = "src/speech/validationwavs/" + names[i] + ".wav";
+			String resource = "src/speech/wavFiles/originalRecording" + names[i] + ".wav";
 			double wav[][] = readWav(resource, fftSize, Fs, i);
 
 			for (int j = 0; j < wav.length; j++) {
@@ -88,18 +88,16 @@ public class ValidationReadWav {
 
 	}
 	
-	public static double[][] getPatientWavs(int fftSize, int outputs,
+	public double[][] getPatientWavs(int fftSize, int outputs,
 			int Fs, int maxAudioLength) throws Exception {
 
-		String resource = "src/speech/validationwavs/patients/male patient e vowel.wav";
+		String resource = "src/speech/wavFiles/patients/male patient e vowel.wav";
 		double wav[][] = readWav(resource, fftSize, Fs, 0);
 		return wav;
 
 	}
 	
-	
-
-	public static double[][] readWav(String filename, int fftSize, int Fs,
+	public double[][] readWav(String filename, int fftSize, int Fs,
 			int num) throws Exception {
 
 		SpectralAnalysisProcess spectralAnalysis = new SpectralAnalysisProcess(

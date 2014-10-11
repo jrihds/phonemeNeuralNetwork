@@ -1,12 +1,12 @@
-package speech;
+package speech.neuralNetwork;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import speech.AudioProcessing.SpectralAnalysisProcess;
-import speech.AudioProcessing.SpectrumAdjust;
+import speech.audioProcessing.SpectralAnalysisProcess;
+import speech.audioProcessing.SpectrumAdjust;
 
 public class NeuralNetClient {
 	
@@ -58,7 +58,7 @@ public class NeuralNetClient {
 		return neuralNetOutputs;
 	}
 	
-	public double[] getSmoothedFrequencySpectrum() {
+	public double[] getAudioSpectrum() {
 		return logarithmicAudio;
 	}
 	

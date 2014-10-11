@@ -1,4 +1,4 @@
-package speech.FrontendGfx;
+package speech.frontendGfx;
 
 import java.awt.*;
 
@@ -14,6 +14,7 @@ import javax.swing.*;
 
 public class DrawScrollingSpectrumHistogram extends JPanel {
 
+	static final long serialVersionUID = 0L;
 	int onscreenBins;
 	double magn[];
 

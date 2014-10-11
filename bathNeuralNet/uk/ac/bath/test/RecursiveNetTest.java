@@ -2,7 +2,7 @@ package uk.ac.bath.test;
 
 import java.util.Random;
 
-import speech.NeuralNet;
+import speech.neuralNetwork.NeuralNet;
 import uk.ac.bath.ai.backprop.BackPropRecursive;
 import uk.ac.bath.ai.backprop.TrainingData;
 

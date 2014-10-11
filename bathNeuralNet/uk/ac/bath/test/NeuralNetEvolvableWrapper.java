@@ -2,7 +2,7 @@ package uk.ac.bath.test;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
-import speech.NeuralNet;
+import speech.neuralNetwork.NeuralNet;
 import uk.ac.bath.ai.backprop.TrainingData;
 
 public class NeuralNetEvolvableWrapper {
