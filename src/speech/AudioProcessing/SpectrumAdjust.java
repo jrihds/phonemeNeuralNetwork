@@ -46,5 +46,12 @@ public class SpectrumAdjust {
 		return smoothed;
 
 	}
+	
+	public double[] changeVolume(int factor, double[] spectrum) {
+		for (int i=0; i<spectrum.length; i++) {
+			spectrum[i]*=factor;							// This is adding volume to the input signal.
+		}													// the USB audio interface isn't 'hot' enough
+		return spectrum;
+	}
 
 }

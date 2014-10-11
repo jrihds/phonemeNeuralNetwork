@@ -57,7 +57,7 @@ public class ReadImage {
 		return all_points;
 	}
 	
-public double[][][] readLipContour1() throws IOException {
+public double[][][] readInnerLipContour() throws IOException {
 		
 		double all_points[][][] = new double[28][3][6];
 		double points[][] = new double[28][3];
@@ -93,7 +93,7 @@ public double[][][] readLipContour1() throws IOException {
 		return all_points;
 	}
 
-public double[][][] readLipContour2() throws IOException {
+public double[][][] readOuterLipContour() throws IOException {
 	
 	double all_points[][][] = new double[26][3][6];
 	double points[][] = new double[26][3];

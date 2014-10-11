@@ -11,10 +11,12 @@ import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import speech.DataAcquisition.ReadImage;
 
 // addComponent function from http://www.java-forums.org/
 
@@ -29,9 +31,13 @@ public class MainApplicationWindow {
 	DrawScrollingPhonemeGraph drawScrollingPhonemeGraph;
 	
 	public DrawScrollingSpectrum drawScrollingSpectrum;
-	DrawScrollingSpectrumHistogram drawScrillingSpectrumHistogram;
+	DrawScrollingSpectrumHistogram drawScrollingSpectrumHistogram;
 
 	private JFrame masterFrame;
+	
+	public double vocalTractContour[][][];
+	public double innerLipContour[][][];
+	public double outerLipContour[][][];
 
 	public MainApplicationWindow(int phonemes, int onscreenBins) {
 		drawCurrentVocalTract = new DrawVocalTract(phonemes);
@@ -40,7 +46,17 @@ public class MainApplicationWindow {
 		drawTargetLipShape = new DrawLips(phonemes);
 		drawScrollingPhonemeGraph = new DrawScrollingPhonemeGraph(phonemes);
 		drawScrollingSpectrum = new DrawScrollingSpectrum(480);
-		drawScrillingSpectrumHistogram = new DrawScrollingSpectrumHistogram(onscreenBins);
+		drawScrollingSpectrumHistogram = new DrawScrollingSpectrumHistogram(onscreenBins);
+		
+		ReadImage readImage = new ReadImage();
+		try {
+			vocalTractContour = readImage.readTract(); 				// Read in data from images of lip
+			innerLipContour = readImage.readInnerLipContour(); 			//		and vocal tract shapes
+			outerLipContour = readImage.readOuterLipContour();			// 		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void makeMaster() {
@@ -122,7 +138,7 @@ public class MainApplicationWindow {
 		addComponent(content, drawTargetVocalTract, 1000, 400, 320, 400);
 		addComponent(content, drawScrollingPhonemeGraph, 0, 0, 360, 400);
 		addComponent(content, drawScrollingSpectrum, 0, 400, 480, 400);
-		addComponent(content, drawScrillingSpectrumHistogram, 480, 400, 200, 400);
+		addComponent(content, drawScrollingSpectrumHistogram, 480, 400, 200, 400);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -130,19 +146,21 @@ public class MainApplicationWindow {
 
 	}
 
-	public void updateGfx(double[][][] vocalTract, String text,
-			double[][][] innerLips, double[][][] outerLips,
-			double[] neuralOutputs, double[] magn) {
+	public void updateGfx(String text, double[] neuralNetOutputs, double[] audioSpectrum) {
 
-		drawCurrentVocalTract.vectorMean(vocalTract, neuralOutputs, text);
-		drawCurrentLipShape.vectorMean(innerLips, outerLips, neuralOutputs);
-		drawScrollingPhonemeGraph.updateGraph(neuralOutputs, KeyHandler.scrollSpeed,
+		drawCurrentVocalTract.vectorMean(vocalTractContour, neuralNetOutputs, text);
+		drawCurrentLipShape.vectorMean(innerLipContour, outerLipContour, neuralNetOutputs);
+		
+		drawScrollingPhonemeGraph.updateGraph(neuralNetOutputs, KeyHandler.scrollSpeed,
 				KeyHandler.scrollTransparent, KeyHandler.scrollPause, text);
-		drawScrillingSpectrumHistogram.update(magn);
+		drawScrollingSpectrumHistogram.update(audioSpectrum);
 		masterFrame.repaint();
 
-		drawTargetVocalTract.vectorMean(vocalTract, KeyHandler.targetNeuralOutputs, KeyHandler.text);
-		drawTargetLipShape.vectorMean(innerLips, outerLips, KeyHandler.targetNeuralOutputs);
+		drawTargetVocalTract.vectorMean(vocalTractContour, KeyHandler.targetNeuralOutputs, KeyHandler.text);
+		drawTargetLipShape.vectorMean(innerLipContour, outerLipContour, KeyHandler.targetNeuralOutputs);
+		
+		drawScrollingSpectrum.notifyMoreDataReady(audioSpectrum);
+		
 	}
 
 	private void addComponent(Container container, Component c, int x, int y,

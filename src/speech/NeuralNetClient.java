@@ -16,19 +16,19 @@ public class NeuralNetClient {
 	SpectrumAdjust spectrumAdjust;
 	SpectralAnalysisProcess sprectralAnalysis;
 	DrawScrollingSpectrum drawScrollingSpectrum;
-	private double outputs[];
-	double smoothed[];
-	double magnLog[];
+	private double neuralNetOutputs[];
+	double logarithmicAudio[];
 	int fftSize;
 	int frequencyBins;
 	
-	public NeuralNetClient(int fftsize, int frequencyBins, DrawScrollingSpectrum scrollingSpect) {
+	//public NeuralNetClient(int fftsize, int frequencyBins, DrawScrollingSpectrum scrollingSpect) {
+	public NeuralNetClient(int fftsize, int frequencyBins) {
 		
 		this.frequencyBins = frequencyBins;
 		this.fftSize=fftsize;
 		spectrumAdjust = new SpectrumAdjust();
-		this.drawScrollingSpectrum=scrollingSpect;
-		outputs = new double[6];
+		//this.drawScrollingSpectrum=scrollingSpect;
+		neuralNetOutputs = new double[6];
 		
 		FileInputStream ostr;
 		try {
@@ -46,36 +46,46 @@ public class NeuralNetClient {
 		
 	}
 
-	public void forwardPass(double[] spectrum) {
+	public void audioChunkReciever(double[] spectrum) {
 		
-		magnLog = spectrumAdjust.linearToLog(frequencyBins, fftSize, spectrum);
+		logarithmicAudio = spectrumAdjust.linearToLog(frequencyBins, fftSize, spectrum);
+		logarithmicAudio = spectrumAdjust.smoothSpectrumRunningAverageOf3(frequencyBins, logarithmicAudio);
+		logarithmicAudio = spectrumAdjust.changeVolume(2, logarithmicAudio);
 		
-		smoothed = spectrumAdjust.smoothSpectrumRunningAverageOf3(frequencyBins, magnLog);
+		//if (drawScrollingSpectrum != null) drawScrollingSpectrum.notifyMoreDataReady(logarithmicAudio);
 		
-		for (int i=0; i<smoothed.length; i++) {
-			smoothed[i]*=2;									// This is adding volume to the input signal.
-		}													// the USB audio interface isn't 'hot' enough
-		
-		if (drawScrollingSpectrum != null) drawScrollingSpectrum.notifyMoreDataReady(magnLog);
-		// the line of code above is bad and needs fixing
-		
-		outputs = neuralNet.forwardPass(smoothed);
+		neuralNetForwardPass(logarithmicAudio);
+	}
+	
+	public void neuralNetForwardPass(double[] audioSpectrum){
+		neuralNetOutputs = neuralNet.forwardPass(logarithmicAudio);
 	}
 	
 	public double[] getNeuralNetworkOutputs() {
-		return outputs;
+		return neuralNetOutputs;
 	}
 	
 	public double[] getSmoothedFrequencySpectrum() {
-		return smoothed;
+		return logarithmicAudio;
 	}
 	
-	public double getMaxPhonemeValue() {
-		double max = 0;
-		for (int i = 0; i < outputs.length; i ++) {
-			if (outputs[i] > max) { max = outputs[i]; }
+	public String getStrongestPhoneme() {
+		
+		double maxPhoneme = 0;
+		String phonemeText = "";
+		
+		for (int i = 0; i < neuralNetOutputs.length; i ++) {
+			if (neuralNetOutputs[i] > maxPhoneme && neuralNetOutputs[i] > 0.3) {
+				maxPhoneme = neuralNetOutputs[i];
+				if (i == 0) {phonemeText = "EEE";}
+				if (i == 1) {phonemeText = "EHH";}
+				if (i == 2) {phonemeText = "ERR";}
+				if (i == 3) {phonemeText = "AHH";}
+				if (i == 4) {phonemeText = "OOH";}
+				if (i == 5) {phonemeText = "UHH";}
+				}
 		}
-		return max;
+		return phonemeText;
 	}
 	
 }

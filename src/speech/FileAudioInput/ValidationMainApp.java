@@ -47,8 +47,8 @@ public class ValidationMainApp {
 		final ReadImage ri = new ReadImage();
 		try {
 			vocalTract = ri.readTract(); 			// Read in data from images
-			lipsInner = ri.readLipContour1(); 			// of lip and tract shapes
-			lipsOuter = ri.readLipContour2();
+			lipsInner = ri.readInnerLipContour(); 			// of lip and tract shapes
+			lipsOuter = ri.readOuterLipContour();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +97,7 @@ public class ValidationMainApp {
 				if (outputSort[5] == outputs[5]) {text = "UHH";}
 			}
 			
-			frames.updateGfx(vocalTract, text, lipsInner, lipsOuter, outputs, smoothed);
+			frames.updateGfx(text, outputs, smoothed);
 
 			Thread.sleep(40);
 
