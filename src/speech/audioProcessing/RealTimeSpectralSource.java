@@ -1,5 +1,7 @@
 package speech.audioProcessing;
 
+//@author PJL
+
 import java.util.List;
 
 import speech.neuralNetwork.NeuralNetClient;

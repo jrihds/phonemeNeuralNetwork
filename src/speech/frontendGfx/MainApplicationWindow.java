@@ -1,5 +1,9 @@
 package speech.frontendGfx;
 
+//addComponent function from http://www.java-forums.org/
+//
+//@author JER
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -13,8 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import speech.dataAcquisition.ReadImage;
-
-// addComponent function from http://www.java-forums.org/
 
 public class MainApplicationWindow {
 

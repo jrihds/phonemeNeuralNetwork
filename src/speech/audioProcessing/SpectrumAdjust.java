@@ -9,7 +9,7 @@ package speech.audioProcessing;
 
 public class SpectrumAdjust {
 
-	public double[] linearToLog(int onscreenBins, int fftsize, double[] spectrum) {
+	public double[] linearToLog(int onscreenBins, int fftsize, double[] linearAudio) {
 		
 		// pass a linear spectrum of audio data, convert it into a logarithmic spectrum
 		// 		and return the value
@@ -21,17 +21,17 @@ public class SpectrumAdjust {
 		}
 
 		double factor = (double) fftsize / triangular;
-		double[] magn_log = new double[onscreenBins];
+		double[] logarithmicAudio = new double[onscreenBins];
 		int count = 0;
 		int count2 = 0;
 		while (count != onscreenBins) {
 			for (int j = 0; j < Math.round(count * factor); j++) {
-				magn_log[count] += spectrum[count2];
+				logarithmicAudio[count] += linearAudio[count2];
 				count2++;
 			}
 			count++;
 		}
-		return magn_log;
+		return logarithmicAudio;
 
 	}
 
@@ -45,11 +45,11 @@ public class SpectrumAdjust {
 
 	}
 	
-	public double[] changeVolume(int factor, double[] spectrum) {
-		for (int i=0; i<spectrum.length; i++) {
-			spectrum[i]*=factor;
+	public double[] changeVolume(int factor, double[] audioSpectrum) {
+		for (int i=0; i<audioSpectrum.length; i++) {
+			audioSpectrum[i]*=factor;
 		}
-		return spectrum;
+		return audioSpectrum;
 	}
 
 }

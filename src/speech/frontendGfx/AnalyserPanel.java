@@ -1,5 +1,7 @@
 package speech.frontendGfx;
 
+//@author PJL
+
 import java.awt.Color;
 import javax.swing.JPanel;
 

@@ -17,82 +17,80 @@ import uk.ac.bath.ai.backprop.BackProp;
 
 public class WavTraining {
 	
-	public static NeuralNet neuralNet;
-	public static SpectrumAdjust spectrumAdjust;
-	public static ReadWav readWav;
-	
-	public static int sampleFreq = 44100;
-	public static int maxAudioLength = 1000;
-
-	public static int neuralNetInputNodeQty = 128;
-	public static int neuralNetHiddenNodeQty = 30;
-	public static int neuralNetOutputNodeQty = 6;
-	
-	public static int fftSize = 1024;
-	public static int onscreenBins = 128;
-	
-	public static double alpha = 300000.0;
-	public static double beta = .000001;
-	
-	public static double maxError = 0.01;
-	
-	private static int i_max;
-
 	public static void main(String args[]) throws Exception {
 
+		SpectrumAdjust spectrumAdjust = new SpectrumAdjust();
+
+		// -------- Setup Neural Network------------------ //
+		
+		int neuralNetInputNodeQty = 128;   // equal to onscreenBins
+		int neuralNetHiddenNodeQty = 30;
+		int neuralNetOutputNodeQty = 6;
+		
+		int fftSize = 1024;
+		int frequencyBins = 128;
+		
+		double alpha = 300000.0;		// training parameter, 300000.0 works ok
+		double beta = .000001;			// training parameter, 0.000001 works ok
+		double targetFitness = 0.01;	// training parameter, 0.01 works ok
+
 		int neuralNetworkSize[] = { neuralNetInputNodeQty, neuralNetHiddenNodeQty, neuralNetOutputNodeQty };
-
-		neuralNet = new BackProp(neuralNetworkSize, beta, alpha, null);
-		spectrumAdjust = new SpectrumAdjust();
-		readWav = new ReadWav(neuralNetOutputNodeQty);
-
+		
+		NeuralNet neuralNet = new BackProp(neuralNetworkSize, beta, alpha, null);
 		neuralNet.randomWeights(0.0, 0.01);
 
-		double error = 1.0;
-		double[] phonemeRaw = new double[fftSize];
-		double[] phonemeLogarthmic = new double[onscreenBins];
-		double[] phonemeSmoothed = new double[onscreenBins];
+		// -------- Read In Wav Files------------------ //
+		
+		int sampleFreq = 44100;
+		int maxAudioLength = 1000;
+		String names[] = { "eee_all", "ehh_all", "err_all", "ahh_all",
+				"ooh_all", "uhh_all", "silence_all" };
+		
+		ReadWav readWav = new ReadWav(neuralNetOutputNodeQty, names );
+		double[][][] wavs = readWav.getMonoThongWavs(fftSize, neuralNetOutputNodeQty, sampleFreq, maxAudioLength);
 
-		int count = 0;
+		double[] phonemeLinear = new double[fftSize];
+		double[] phonemeLogarthmic = new double[frequencyBins];
 		
 		// -------- Train Network------------------ //
 
-		// Read wavs from file
-		double[][][] wavs = readWav.getMonoThongWavs(fftSize, neuralNetOutputNodeQty, sampleFreq, maxAudioLength);
+		int epochCount = 0;
+		double currentFitness = 1.0;
+		int maxNumFftSlices = readWav.file_length[0] - 1;
+		double[] targetOutputValues;
 		
-		while (error > maxError) {
+		while (currentFitness > targetFitness) {
 			
-			error = 0.0;
-			
-			i_max = readWav.file_length[0] - 1;
+			currentFitness = 0.0;
 
-			for (int i = 1; i < i_max; i++) { 							// Cycle through instances of FFT
+			for (int i = 1; i < maxNumFftSlices; i++) { 				// Cycle through instances of FFT
 				for (int p = 0; p < neuralNetOutputNodeQty+1; p++) { 	// Cycle through phonemes
 					
 					for (int j = 0; j < fftSize; j++) {
-						phonemeRaw[j] = wavs[i][j][p];
+						phonemeLinear[j] = wavs[i][j][p];
 					}
 					
-					phonemeLogarthmic = spectrumAdjust.linearToLog(onscreenBins, fftSize, phonemeRaw); 
-					phonemeSmoothed = spectrumAdjust.smoothSpectrumRunningAverageOf3(onscreenBins, phonemeLogarthmic); 
+					phonemeLogarthmic = spectrumAdjust.linearToLog(frequencyBins, fftSize, phonemeLinear); 
+					phonemeLogarthmic = spectrumAdjust.smoothSpectrumRunningAverageOf3(frequencyBins, phonemeLogarthmic); 
 
-					double[] train_outvals = new double[neuralNetOutputNodeQty+1];
-					if (p != neuralNetOutputNodeQty) train_outvals[p] = 1.0;
+					targetOutputValues = new double[neuralNetOutputNodeQty+1];			// create new target array
+					if (p != neuralNetOutputNodeQty) targetOutputValues[p] = 1.0;		// only make target phoneme
+																						//    output node 'true'
 
-					neuralNet.backPropTrain(phonemeSmoothed, train_outvals); 		// Do a back prop
+					neuralNet.backPropTrain(phonemeLogarthmic, targetOutputValues); 	// Do a back prop
 
-					double[] output_vals = neuralNet.forwardPass(phonemeSmoothed);
+					double[] currentOutputValues = neuralNet.forwardPass(phonemeLogarthmic);
 
 					for (int j = 0; j < neuralNetOutputNodeQty; j++) {
-						error += (train_outvals[j] - output_vals[j])
-								* (train_outvals[j] - output_vals[j]);
+						currentFitness += (targetOutputValues[j] - currentOutputValues[j])
+								* (targetOutputValues[j] - currentOutputValues[j]);
 					}
 
 				}
 			}
 			
-			if (count % 10 == 0) System.out.println("Total Error: " + error);	// print training progress
-			count++;
+			if (epochCount % 10 == 0) System.out.println("Total Error: " + currentFitness);	// print training progress
+			epochCount++;
 			
 		}
 
@@ -103,7 +101,7 @@ public class WavTraining {
 		out.close();
 
 		System.out.println("Finished training! \n It took "
-				+ count + " back props");
+				+ epochCount + " back props");
 
 	}
 

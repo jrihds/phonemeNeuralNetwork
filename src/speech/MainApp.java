@@ -1,5 +1,6 @@
 package speech;
 
+//@author JER and PJL
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

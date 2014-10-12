@@ -1,5 +1,7 @@
 package speech.neuralNetwork;
 
+//@author JER and PJL
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

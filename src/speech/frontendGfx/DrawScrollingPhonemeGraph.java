@@ -1,5 +1,6 @@
 package speech.frontendGfx;
 
+//@author JER and PJL
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;

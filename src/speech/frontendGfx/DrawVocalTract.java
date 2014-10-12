@@ -1,8 +1,5 @@
 package speech.frontendGfx;
 
-import java.awt.*;
-import javax.swing.*;
-
 //
 //@author JER
 //
@@ -10,6 +7,9 @@ import javax.swing.*;
 * Paints a vocal tract onscreen, the position of which can be updated
 *  by calling vectorMean
 */
+
+import java.awt.*;
+import javax.swing.*;
 
 public class DrawVocalTract extends JPanel {
 

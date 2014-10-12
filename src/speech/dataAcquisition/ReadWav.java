@@ -1,13 +1,5 @@
 package speech.dataAcquisition;
 
-import com.frinika.audio.io.AudioReader;
-import com.frinika.audio.io.VanillaRandomAccessFile;
-import java.io.File;
-import java.io.RandomAccessFile;
-
-import speech.audioProcessing.SpectralAnalysisProcess;
-import uk.org.toot.audio.core.AudioBuffer; 
-
 //
 //@author JER
 //
@@ -18,21 +10,28 @@ import uk.org.toot.audio.core.AudioBuffer;
  *  
  */
 
+import com.frinika.audio.io.AudioReader;
+import com.frinika.audio.io.VanillaRandomAccessFile;
+import java.io.File;
+import java.io.RandomAccessFile;
+
+import speech.audioProcessing.SpectralAnalysisProcess;
+import uk.org.toot.audio.core.AudioBuffer; 
+
 public class ReadWav {
 
 	public int file_length[];
+	String names[];
 
-	public ReadWav(int outputs) {
+	public ReadWav(int outputs, String[] names) {
 		file_length = new int[outputs + 1];
+		this.names = names;
 	}
 
 	public double[][][] getMonoThongWavs(int fftSize, int outputs,
 			int Fs, int maxAudioLength) throws Exception {
 
 		double allWavs[][][] = new double[maxAudioLength][fftSize][21];
-
-		String names[] = { "eee_all", "ehh_all", "err_all", "ahh_all",
-				"ooh_all", "uhh_all", "silence_all" };
 
 		for (int i = 0; i < outputs + 1; i++) {
 

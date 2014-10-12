@@ -1,11 +1,5 @@
 package speech.dataAcquisition;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
-
 // multidimensional array sort taken from: http://realityisimportant.blogspot.com/
 
 //
@@ -18,13 +12,19 @@ import javax.imageio.ImageIO;
 * 
 * */
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
 public class ReadImage {
 
 	public double[][][] readTract() throws IOException {
 		
-		double all_points[][][] = new double[100][3][6];
-		double points[][] = new double[100][3];
-		double sorted_points[][] = new double[100][3];
+		double vocalTractCoordinates[][][] = new double[100][3][6];
+		double workingCoordinates[][] = new double[100][3];
+		double sortedCoordinates[][] = new double[100][3];
 		String names[]=	{"ee_wgr","eh_wgr","er_wgr","ah_wgr","oo_wgr","oh_wgr"};
 	
 		for (int f=0; f<6; f++) {
@@ -33,6 +33,7 @@ public class ReadImage {
 
 			URL url=this.getClass().getResource(resource);
 			BufferedImage img = ImageIO.read(url);
+			
 			int count=0;
 			for (int i=0; i<405; i++) {
 				for (int j=0; j<600; j++) {
@@ -40,28 +41,31 @@ public class ReadImage {
 					double green = (img.getRGB(i,j)>>8) & 0xff;
 					double blue = (img.getRGB(i,j)) & 0xff;
 					if (green==255.0 && blue==0.0 && red<150.0) {
-						points[count][0]=(double)i;
-						points[count][1]=(double)j;
-						points[count][2]=(double)((img.getRGB(i, j) >> 16) & 0xff);
+						workingCoordinates[count][0]=(double)i;
+						workingCoordinates[count][1]=(double)j;
+						workingCoordinates[count][2]=(double)((img.getRGB(i, j) >> 16) & 0xff);
 						count++;
 					}
 				}
 			}
-			sorted_points=bubbleSortMulti(points, 2);
+			
+			sortedCoordinates = bubbleSortMulti(workingCoordinates, 2);
+			
 			for (int i=0; i<100; i++) {
-				all_points[i][0][f]=sorted_points[i][0];
-				all_points[i][1][f]=sorted_points[i][1];
-				all_points[i][2][f]=(double)i;
+				vocalTractCoordinates[i][0][f]=sortedCoordinates[i][0];
+				vocalTractCoordinates[i][1][f]=sortedCoordinates[i][1];
+				vocalTractCoordinates[i][2][f]=(double)i;
 			}
+			
 		}
-		return all_points;
+		return vocalTractCoordinates;
 	}
 	
 public double[][][] readInnerLipContour() throws IOException {
 		
-		double all_points[][][] = new double[28][3][6];
-		double points[][] = new double[28][3];
-		double sorted_points[][] = new double[28][3];
+		double vocalTractCoordinates[][][] = new double[28][3][6];
+		double workingCoordinates[][] = new double[28][3];
+		double sortedCoordinates[][] = new double[28][3];
 		
 		String names[]=	{"lipsEEE","lipsEHH","lipsERR","lipsAHH","lipsOOH","lipsUHH"};
 
@@ -76,28 +80,31 @@ public double[][][] readInnerLipContour() throws IOException {
 					double green = (img.getRGB(i,j)>>8) & 0xff;
 					double blue = (img.getRGB(i,j)) & 0xff;
 					if (green==100.0 && blue==100.0 && red<28.0) {
-						points[count][0]=(double)i;
-						points[count][1]=(double)j;
-						points[count][2]=(double)((img.getRGB(i, j) >> 16) & 0xff);
+						workingCoordinates[count][0]=(double)i;
+						workingCoordinates[count][1]=(double)j;
+						workingCoordinates[count][2]=(double)((img.getRGB(i, j) >> 16) & 0xff);
 						count++;
 					}
 					}
 				}
-			sorted_points=bubbleSortMulti(points, 2);
+			
+			sortedCoordinates=bubbleSortMulti(workingCoordinates, 2);
+			
 			for (int i=0; i<28; i++) {
-				all_points[i][0][f]=(double)sorted_points[i][0];
-				all_points[i][1][f]=(double)sorted_points[i][1];
-				all_points[i][2][f]=(double)i;
+				vocalTractCoordinates[i][0][f]=(double)sortedCoordinates[i][0];
+				vocalTractCoordinates[i][1][f]=(double)sortedCoordinates[i][1];
+				vocalTractCoordinates[i][2][f]=(double)i;
 			}
+			
 		}
-		return all_points;
+		return vocalTractCoordinates;
 	}
 
 public double[][][] readOuterLipContour() throws IOException {
 	
-	double all_points[][][] = new double[26][3][6];
-	double points[][] = new double[26][3];
-	double sorted_points[][] = new double[26][3];
+	double vocalTractCoordinates[][][] = new double[26][3][6];
+	double workingCoordinates[][] = new double[26][3];
+	double sortedCoordinates[][] = new double[26][3];
 	for (int f=0; f<6; f++) {
 
 		String names[]=	{"lipsEEE","lipsEHH","lipsERR","lipsAHH","lipsOOH","lipsUHH"};
@@ -112,24 +119,30 @@ public double[][][] readOuterLipContour() throws IOException {
 				double green = (img.getRGB(i,j)>>8) & 0xff;
 				double blue = (img.getRGB(i,j)) & 0xff;
 				if (green<26.0 && blue==100.0 && red==100.0) {
-					points[count][0]=(double)i;
-					points[count][1]=(double)j;
-					points[count][2]=(double)green;
+					workingCoordinates[count][0]=(double)i;
+					workingCoordinates[count][1]=(double)j;
+					workingCoordinates[count][2]=(double)green;
 					count++;
 					}
 				}
 			}
-		sorted_points=bubbleSortMulti(points, 2);
+		
+		sortedCoordinates=bubbleSortMulti(workingCoordinates, 2);
+		
 		for (int i=0; i<26; i++) {
-			all_points[i][0][f]=(double)sorted_points[i][0];
-			all_points[i][1][f]=(double)sorted_points[i][1];
-			all_points[i][2][f]=(double)i;
+			vocalTractCoordinates[i][0][f]=(double)sortedCoordinates[i][0];
+			vocalTractCoordinates[i][1][f]=(double)sortedCoordinates[i][1];
+			vocalTractCoordinates[i][2][f]=(double)i;
 		}
+		
 	}
-	return all_points;
+	return vocalTractCoordinates;
 }
 	
 	private double[][] bubbleSortMulti(double[][] MultiIn, int compIdx) {  
+		
+		// multidimensional array sort taken from: http://realityisimportant.blogspot.com/
+
 	    double[][] temp = new double[MultiIn.length][MultiIn[0].length];  
 	    boolean finished = false;  
 	    while (!finished) {  

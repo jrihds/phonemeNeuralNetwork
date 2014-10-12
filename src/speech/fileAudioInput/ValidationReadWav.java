@@ -1,5 +1,7 @@
 package speech.fileAudioInput;
 
+//@author JER
+
 import com.frinika.audio.io.AudioReader;
 import com.frinika.audio.io.VanillaRandomAccessFile;
 

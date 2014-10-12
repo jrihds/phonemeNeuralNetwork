@@ -1,12 +1,5 @@
 package speech.fileAudioInput;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-
-import speech.audioProcessing.SpectrumAdjust;
-import speech.neuralNetwork.NeuralNet;
-import uk.ac.bath.ai.backprop.BackProp;
-
 //
 //@author JER
 //
@@ -14,6 +7,13 @@ import uk.ac.bath.ai.backprop.BackProp;
  * Trains a neural network for a given set of audio data acquired from
  * a variety of sound sources
  */
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
+import speech.audioProcessing.SpectrumAdjust;
+import speech.neuralNetwork.NeuralNet;
+import uk.ac.bath.ai.backprop.BackProp;
 
 public class ValidationWavTraining {
 	

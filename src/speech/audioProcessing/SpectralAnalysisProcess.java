@@ -1,11 +1,12 @@
 package speech.audioProcessing;
 
+//@author PJL
+// PJL add channel to constructor
+// now removing it
+
 import speech.neuralNetwork.NeuralNetClient;
 import uk.ac.bath.audio.FFTWorker;
 import uk.org.toot.audio.core.AudioBuffer;
-
-// PJL add channel to constructor
-// now removing it
 
 public class SpectralAnalysisProcess {
 
