@@ -1,9 +1,13 @@
 package speech;
 
 //@author JER and PJL
+//
+//  For use when using the system with a microphone in real-time
+//
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Timer;
 
 import speech.audioProcessing.RealTimeSpectralSource;

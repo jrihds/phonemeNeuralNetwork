@@ -21,11 +21,11 @@ import uk.org.toot.audio.core.AudioBuffer;
 public class ReadWav {
 
 	public int file_length[];
-	String names[];
+	String names[] = { "eee_all", "ehh_all", "err_all", "ahh_all",
+			"ooh_all", "uhh_all", "silence_all" };
 
-	public ReadWav(int outputs, String[] names) {
+	public ReadWav(int outputs) {
 		file_length = new int[outputs + 1];
-		this.names = names;
 	}
 
 	public double[][][] getMonoThongWavs(int fftSize, int outputs,
@@ -48,8 +48,20 @@ public class ReadWav {
 		return allWavs;
 
 	}
+	
+	public double[][] getPatientWavs(int fftSize, int outputs, int Fs, String fileName) throws Exception {
 
-	public double[][] readWav(String filename, int fftSize, int Fs,
+		String resource = "src/speech/wavFiles/patients/"+fileName;
+		double wav[][] = readWav(resource, fftSize, Fs, 0);
+		return wav;
+
+	}
+	
+	public double getPateintFileLength() {
+		return file_length[0];
+	}
+
+	private double[][] readWav(String filename, int fftSize, int Fs,
 			int num) throws Exception {
 
 		SpectralAnalysisProcess spectralAnalysis = new SpectralAnalysisProcess(
@@ -79,7 +91,6 @@ public class ReadWav {
 		}
 
 		file_length[num] = i;
-		System.out.println("The file has a length of: " + i);
 
 		return output;
 

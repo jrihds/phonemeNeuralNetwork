@@ -43,10 +43,8 @@ public class WavTraining {
 		
 		int sampleFreq = 44100;
 		int maxAudioLength = 1000;
-		String names[] = { "eee_all", "ehh_all", "err_all", "ahh_all",
-				"ooh_all", "uhh_all", "silence_all" };
 		
-		ReadWav readWav = new ReadWav(neuralNetOutputNodeQty, names );
+		ReadWav readWav = new ReadWav(neuralNetOutputNodeQty);
 		double[][][] wavs = readWav.getMonoThongWavs(fftSize, neuralNetOutputNodeQty, sampleFreq, maxAudioLength);
 
 		double[] phonemeLinear = new double[fftSize];
