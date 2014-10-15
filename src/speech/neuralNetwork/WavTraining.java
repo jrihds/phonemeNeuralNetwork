@@ -45,7 +45,7 @@ public class WavTraining {
 		int maxAudioLength = 1000;
 		
 		ReadWav readWav = new ReadWav(neuralNetOutputNodeQty);
-		double[][][] wavs = readWav.getMonoThongWavs(fftSize, neuralNetOutputNodeQty, sampleFreq, maxAudioLength);
+		double[][][] wavs = readWav.getMonothongTrainingWavs(fftSize, neuralNetOutputNodeQty, sampleFreq, maxAudioLength);
 
 		double[] phonemeLinear = new double[fftSize];
 		double[] phonemeLogarthmic = new double[frequencyBins];
@@ -69,7 +69,7 @@ public class WavTraining {
 					}
 					
 					phonemeLogarthmic = spectrumAdjust.linearToLog(frequencyBins, fftSize, phonemeLinear); 
-					phonemeLogarthmic = spectrumAdjust.smoothSpectrumRunningAverageOf3(frequencyBins, phonemeLogarthmic); 
+					phonemeLogarthmic = spectrumAdjust.smoothSpectrumRunningAverageOf3(phonemeLogarthmic); 
 
 					targetOutputValues = new double[neuralNetOutputNodeQty+1];			// create new target array
 					if (p != neuralNetOutputNodeQty) targetOutputValues[p] = 1.0;		// only make target phoneme

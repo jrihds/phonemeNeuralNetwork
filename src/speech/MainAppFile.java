@@ -17,6 +17,7 @@ public class MainAppFile {
 	
 	double neuralNetworkOutputs[];
 	double audioSpectrum[];
+	double testWav[][];
 	String phonemeText;
 	double spectrum[] = new double[fftSize];
 	
@@ -27,7 +28,8 @@ public class MainAppFile {
 	String fileName = "male patient e vowel.wav";
 	
 	public static void main(String args[]) throws Exception {
-		new MainAppFile();
+		MainAppFile appFile = new MainAppFile();
+		appFile.start();
 	}
 	
 	MainAppFile() throws Exception {
@@ -36,10 +38,13 @@ public class MainAppFile {
 		mainApplicationWindow.makeMaster();
 		
 		readWav = new ReadWav(numberOfPhonemes);
-		double testWav[][] = readWav.getPatientWavs(fftSize, numberOfPhonemes, 44100, fileName);
+		testWav = readWav.getPatientWavs(fftSize, numberOfPhonemes, 44100, fileName);
 		
 		neuralNetworkClient = new NeuralNetClient(fftSize, frequencyBins);
 		
+	}
+	
+	void start() throws Exception {
 		for (int k = 0; k < readWav.getPateintFileLength(); k++) {
 			for (int j = 0; j < fftSize; j++) {
 				spectrum[j] = testWav[k][j];

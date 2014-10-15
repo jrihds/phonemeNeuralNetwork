@@ -28,7 +28,7 @@ public class ReadWav {
 		file_length = new int[outputs + 1];
 	}
 
-	public double[][][] getMonoThongWavs(int fftSize, int outputs,
+	public double[][][] getMonothongTrainingWavs(int fftSize, int outputs,
 			int Fs, int maxAudioLength) throws Exception {
 
 		double allWavs[][][] = new double[maxAudioLength][fftSize][21];

@@ -35,11 +35,24 @@ public class SpectrumAdjust {
 
 	}
 
-	public double[] smoothSpectrumRunningAverageOf3(int onscreen_bins, double[] magnLog) {
+	public double[] smoothSpectrumRunningAverageOf3(double[] audioSpectrum) {
 
-		double[] smoothed = new double[onscreen_bins];
-		for (int i = 1; i < (onscreen_bins - 1); i++) {
-			smoothed[i] = (magnLog[i - 1] + magnLog[i] + magnLog[i + 1]) / 3;
+		double[] smoothed = new double[audioSpectrum.length];
+		double left, right, middle;
+		
+		for (int i = 0; i < audioSpectrum.length; i++) {
+			
+			left = right = 0;
+			middle = audioSpectrum[i];
+
+			try{ 
+				left = audioSpectrum[i - 1];
+				right = audioSpectrum[i + 1];
+			}
+			catch(Exception e){
+				continue;
+			}
+			smoothed[i] = (left+middle+right) / 3;
 		}
 		return smoothed;
 

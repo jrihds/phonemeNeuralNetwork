@@ -46,7 +46,7 @@ public class NeuralNetClient {
 	public void audioChunkReciever(double[] spectrum) {
 		
 		logarithmicAudio = spectrumAdjust.linearToLog(frequencyBins, fftSize, spectrum);
-		logarithmicAudio = spectrumAdjust.smoothSpectrumRunningAverageOf3(frequencyBins, logarithmicAudio);
+		logarithmicAudio = spectrumAdjust.smoothSpectrumRunningAverageOf3(logarithmicAudio);
 		logarithmicAudio = spectrumAdjust.changeVolume(2, logarithmicAudio);
 		
 		neuralNetForwardPass(logarithmicAudio);
