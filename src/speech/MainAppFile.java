@@ -45,7 +45,7 @@ public class MainAppFile {
 	}
 	
 	void start() throws Exception {
-		for (int k = 0; k < readWav.getPateintFileLength(); k++) {
+		for (int k = 0; k < readWav.getPatientFileLength(); k++) {
 			for (int j = 0; j < fftSize; j++) {
 				spectrum[j] = testWav[k][j];
 			}

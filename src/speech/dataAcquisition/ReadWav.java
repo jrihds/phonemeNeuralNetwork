@@ -57,7 +57,7 @@ public class ReadWav {
 
 	}
 	
-	public double getPateintFileLength() {
+	public double getPatientFileLength() {
 		return file_length[0];
 	}
 
